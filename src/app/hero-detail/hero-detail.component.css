@@ -1,0 +1,50 @@
+/* HeroDetailComponent's private CSS styles */
+label {
+    color: #435960;
+    font-weight: bold;
+  }
+  input {
+    font-size: 1em;
+    padding: .5rem;
+  }
+  .goback {
+    margin-top: 20px;
+    background-color: #eee;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .goback:hover {
+    background-color: #cfd8dc;
+  }
+  .goback:disabled {
+    background-color: #eee;
+    color: #ccc;
+    cursor: auto;
+  }
+
+  .img-weapon{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .weapon-menu {
+    padding: 0;
+
+    max-width: 1000px;
+  
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .img-weapon{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angulartourofheroes-c75de": {
+      "hosting": {
+        "angular-tour-of-heroes-joyeuxbe": [
+          "angulartourofheroes-c75de"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angulartourofheroes-c75de"
+  }
+}

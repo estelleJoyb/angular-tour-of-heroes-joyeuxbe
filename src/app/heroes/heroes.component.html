@@ -1,0 +1,51 @@
+<div class="container mx-auto">
+	<div class="row">
+		<div class="col-md container-md">
+            <h4 class="text-center"><strong>My Heroes</strong></h4>
+            <hr>
+            <button class="goback" type="button" (click)="Create()">Create a new Heroe</button>
+            <div class="d-flex flex-wrap">
+                <div class="profile-card-4 text-center" *ngFor="let heroe of heroesConcrete"><img src={{heroe.image}} class="img img-responsive">
+                    <div class="profile-content">
+                        <div class="profile-name">{{heroe.getName() | uppercase }}
+                            <p>Tour of heroe</p>
+                        </div>
+                    
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>Damage</p>
+                                    <h4>{{heroe.getDegats()}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>Attack</p>
+                                    <h4>{{ heroe.getAttaque()}}</h4>
+                                    </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>Dodge</p>
+                                    <h4>{{ heroe.getEsquive()}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="profile-overview">
+                                    <p>Hit Point</p>
+                                    <h4>{{ heroe.getPv()}}</h4>
+                                </div>
+                            </div>
+                            <a routerLink="/detail/{{heroe.id}}" class="bg-dark m-2 text-white rounded mx-auto">See this Heroe</a>
+                        </div>
+                </div>
+            </div>
+            </div>
+    </div>
+	</div>
+</div>
+
+  
+
+
+

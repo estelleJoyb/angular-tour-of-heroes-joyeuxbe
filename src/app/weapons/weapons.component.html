@@ -1,0 +1,47 @@
+
+  
+<div class="container mx-auto">
+	<div class="row">
+		<div class="col-md container-md">
+            <h4 class="text-center"><strong>My weapons</strong></h4>
+            <hr>
+            <div class="d-flex flex-wrap">
+              <div class="profile-card-4 text-center" *ngFor="let weapon of armesConcrete"><img src={{weapon.image}} class="img img-responsive bg-gris">
+                <div class="profile-content">
+                    <div class="profile-name">{{weapon.name | uppercase }}
+                        <p>Tour of heroe</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="profile-overview">
+                                <p>Damage</p>
+                                <h4>{{weapon.degats}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="profile-overview">
+                                <p>Attack</p>
+                                <h4>{{ weapon.attaque}}</h4>
+                              </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="profile-overview">
+                                <p>Dodge</p>
+                                <h4>{{ weapon.esquive}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="profile-overview">
+                              <p>Usury</p>
+                              <h4>{{ weapon.usure }}</h4>
+                          </div>
+                      </div>
+                      <a routerLink="/detailweapon/{{weapon.id}}" class="bg-dark m-2 text-white rounded mx-auto">See this Weapon</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+	</div>
+</div>
