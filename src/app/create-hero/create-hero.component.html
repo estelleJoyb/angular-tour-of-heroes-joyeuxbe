@@ -6,18 +6,29 @@
             <form>
                 <div class="form-group m-1">
                   <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter a name">
+                  <input type="text" class="form-control" id="name" [(ngModel)]="hero.name" placeholder="Enter a name">
                 </div>
-                <div class="form-group m-1 d-flex">
-                    <div>
-                        <label for="attack">Attack</label>
-                        <input type="number" class="form-control" id="attack" placeholder="9">
+                <div class="form-group m-1 d-flex justify-content-between">
+                    <div class="p-2 w-100">
+                        <label for="damage">Damage</label>
+                        <input type="number" class="form-control" [(ngModel)]="hero.degats" id="damage" placeholder="9">
                     </div>
-                    <div>
+                    <div class="p-2 w-100">
                         <label for="attack">Attack</label>
-                        <input type="number" class="form-control" id="attack" placeholder="9">
+                        <input type="number" class="form-control" [(ngModel)]="hero.attaque" id="attack" placeholder="9">
                     </div>
-                    
+                    <div class="p-2 w-100">
+                        <label for="dodge">Dodge</label>
+                        <input type="number" class="form-control" [(ngModel)]="hero.esquive" id="dodge" placeholder="9">
+                    </div>
+                    <div class="p-2 w-100">
+                        <label for="pv">Hit Point</label>
+                        <input type="number" class="form-control" [(ngModel)]="hero.pv" id="pv" placeholder="9">
+                    </div>
+                </div>
+                <div class="form-group m-1 mb-3">
+                    <label class="align-middle" for="hero-image" style="margin-right : 15px;">Image:</label>
+                    <input type="file" id="hero-image" name="image" accept="image/png, image/jpeg" (change)="getImage($event)">
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Create</button>
