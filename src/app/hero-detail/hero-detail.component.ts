@@ -19,7 +19,7 @@ export class HeroDetailComponent implements OnInit {
   heroAsync?: Observable<HeroId[]>;
   heroConcreteAsync?: Observable<HeroConcrete[]>;
   hero: HeroId[];
-  heroConcrete: HeroConcrete[];
+  heroConcrete: HeroConcrete;
   
   constructor(
     private route: ActivatedRoute,
@@ -29,19 +29,21 @@ export class HeroDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
     this.getHero();
     this.getHeroAsync();
     this.getHeroConcreteAsync();
-    this.getHeroConcrete();
+    this.getHeroConcrete(id);
     this.getAllWeapons();
+
   }
 
   getHero(): void {
     this.heroService.getHeroes()
     .subscribe(hero => {this.hero = hero});
   }
-  getHeroConcrete():void {
-    this.heroService.getHeroesConcrete()
+  getHeroConcrete(id: string):void {
+    this.heroService.getHeroConcrete(id)
       .subscribe(heroConcrete => {
         this.heroConcrete = heroConcrete;
       });
@@ -55,7 +57,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.location.back();//on quitte la page
   }
 
   getAllWeapons():void{
@@ -64,26 +66,42 @@ export class HeroDetailComponent implements OnInit {
   }
 
   UpdateName(name : string){
-    if(this.heroConcrete[0] != undefined && name != ""){
-      this.heroConcrete[0].setName(name);
+    if(this.heroConcrete != undefined && name != ""){
+      this.heroConcrete.setName(name);
+      const dataName: Partial<HeroConcrete> = { name: this.heroConcrete.getName() };
+      this.heroService.updateHero(this.heroConcrete.id, dataName);
+    }
+  }
+
+  UpdateDegats(damage: number){
+    if(this.heroConcrete != undefined && damage >= 0){
+      this.heroConcrete.setDegats(damage);
+      const dataDegats: Partial<HeroConcrete> = { degats: this.heroConcrete.getDegats()};
+      this.heroService.updateHero(this.heroConcrete.id, dataDegats);
     }
   }
 
   UpdateAttaque(attaque : number){
     if(this.heroConcrete != undefined && attaque >= 0){
-      this.heroConcrete[0].setAttaque(attaque);
+      this.heroConcrete.setAttaque(attaque);
+      const dataAttaque: Partial<HeroConcrete> = { attaque: this.heroConcrete.getAttaque()};
+      this.heroService.updateHero(this.heroConcrete.id, dataAttaque);
     }
   }
 
   UpdateEsquive(esquive : number){
     if(this.heroConcrete != undefined && esquive >= 0){
-      this.heroConcrete[0].setEsquive(esquive);
+      this.heroConcrete.setEsquive(esquive);
+      const dataEsquive: Partial<HeroConcrete> = { esquive: this.heroConcrete.getEsquive()};
+      this.heroService.updateHero(this.heroConcrete.id, dataEsquive);
     }
   }
 
   Updatepv(pv : number){
     if(this.heroConcrete != undefined && pv >= 0){
-      this.heroConcrete[0].setPv(pv);
+      this.heroConcrete.setPv(pv);
+      const dataPv: Partial<HeroConcrete> = { pv: this.heroConcrete.getPv()};
+      this.heroService.updateHero(this.heroConcrete.id, dataPv);
     }
   }
 
@@ -102,8 +120,9 @@ export class HeroDetailComponent implements OnInit {
           const arrayBuffer = reader.result; 
           //const decoder = new TextDecoder('utf-8');
           //const stringImg = decoder.decode(arrayBuffer);
-          this.heroConcrete[0].setImage(arrayBuffer.toString());
-          console.log(arrayBuffer.toString());
+          this.heroConcrete.setImage(arrayBuffer.toString());
+          const dataImage: Partial<HeroConcrete> = { image: this.heroConcrete.getImage()};
+          this.heroService.updateHero(this.heroConcrete.id, dataImage);
         }
         
       }
@@ -114,8 +133,9 @@ export class HeroDetailComponent implements OnInit {
     this.armeService.getWeapon(id)
       .subscribe(weapon => weapon = weapon);
     if(this.heroConcrete != undefined && weapon != undefined){
-      this.heroConcrete[0].AddArme(weapon);
+      this.heroConcrete.AddArme(weapon);
     }
   }
+
   
 }

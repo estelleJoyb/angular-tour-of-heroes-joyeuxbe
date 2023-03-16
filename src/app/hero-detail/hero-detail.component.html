@@ -1,35 +1,43 @@
 <div *ngIf="heroConcrete" class="container-md mx-auto">
-    <h2>{{heroConcrete[0].getName() | uppercase}} Details</h2>
+  <button class="bg-transparent border-0" type="button" (click)="goBack()" title="Go back"><img src="../../assets/img/back.png" alt="Go back"></button>
+    <h2>{{heroConcrete.getName() | uppercase}} Details</h2>
 
     <div class="d-flex ">
-      <img class="rounded" src={{heroConcrete[0].image}} alt="" width="400px">
+      <img class="rounded" src={{heroConcrete.getImage()}} alt="" width="400px">
       <div class="m-3 d-flex flex-column w-50">
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle " style="margin-right : 15px;" for="hero-name">Name: </label>
-            <input class="align-middle ml-2" id="hero-name" [(ngModel)]="heroConcrete[0].getName" (change)="UpdateName(heroConcrete[0].getName())" placeholder="Hero name"/>
+            <input class="align-middle ml-2" id="hero-name" [(ngModel)]="heroConcrete.name" (change)="UpdateName(heroConcrete.getName())" placeholder="Hero name"/>
           </div>
+          </div>
+          <div class="d-flex m-2 justify-content-between">
+            <div class="justify-content-between d-flex w-50">
+              <label class="align-middle mr-2" style="margin-right : 15px;" for="hero-degats">Base Damage:</label>
+              <input class="align-middle ml-2" id="hero-degats" [(ngModel)]="heroConcrete.degats" (change)="UpdateDegats(heroConcrete.degats)" placeholder="Hero damage">
+            </div>
+            <p class="align-middle ml-2">Total Damage : {{heroConcrete.getDegats()}}</p>
           </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle mr-2" style="margin-right : 15px;" for="hero-attaque">Base Attack:</label>
-            <input class="align-middle ml-2" id="hero-attaque" [(ngModel)]="heroConcrete[0].attaque" (change)="UpdateAttaque(heroConcrete[0].attaque)" placeholder="Hero attack">
+            <input class="align-middle ml-2" id="hero-attaque" [(ngModel)]="heroConcrete.attaque" (change)="UpdateAttaque(heroConcrete.attaque)" placeholder="Hero attack">
           </div>
-          <p class="align-middle ml-2">Total Attack : {{heroConcrete[0].getAttaque()}}</p>
+          <p class="align-middle ml-2">Total Attack : {{heroConcrete.getAttaque()}}</p>
         </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle" style="margin-right : 15px;" for="hero-esquive">Base Dodge:</label>
-            <input class="align-middle ml-2" id="hero-esquive" [(ngModel)]="heroConcrete[0].esquive" (change)="UpdateEsquive(heroConcrete[0].esquive)" placeholder="Hero dodge">
+            <input class="align-middle ml-2" id="hero-esquive" [(ngModel)]="heroConcrete.esquive" (change)="UpdateEsquive(heroConcrete.esquive)" placeholder="Hero dodge">
           </div>
-          <p class="align-middle ml-2">Total Dodge : {{heroConcrete[0].getEsquive}}</p>
+          <p class="align-middle ml-2">Total Dodge : {{heroConcrete.getEsquive()}}</p>
         </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle" style="margin-right : 15px;" for="hero-pv" >Base Hit point:</label>
-            <input class="align-middle ml-2" id="hero-pv" [(ngModel)]="heroConcrete[0].pv" (change)="Updatepv(heroConcrete[0].pv)" placeholder="Hero hit point">
+            <input class="align-middle ml-2" id="hero-pv" [(ngModel)]="heroConcrete.pv" (change)="Updatepv(heroConcrete.pv)" placeholder="Hero hit point">
           </div>
-          <p class="align-middle ml-2">Total Hit Point : {{heroConcrete[0].getPv()}}</p>
+          <p class="align-middle ml-2">Total Hit Point : {{heroConcrete.getPv()}}</p>
         </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
@@ -40,9 +48,10 @@
         </div>
       </div>
     </div>
-    <div *ngIf="heroConcrete[0].armes.length != 0">
-      <h3 class="mt-5">Weapons of {{heroConcrete[0].getName()}}</h3>
-      <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of heroConcrete[0].armes">
+    
+    <div *ngIf="heroConcrete.armes.length != 0">
+      <h3 class="mt-5">Weapons of {{heroConcrete.getName()}}</h3>
+      <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of heroConcrete.armes">
         <img class="card-img-top img-weapon w-100" src={{weapon.image}} alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">{{weapon.name}}</h5>
@@ -57,8 +66,9 @@
         </div>
       </div>
     </div>
+
     <h3 class="mt-5">Weapons available</h3>
-    <div *ngIf="weapons && weapons.length >0" class="weapon-menu">
+    <!-- <div *ngIf="weapons && weapons.length >0" class="weapon-menu">
       
       <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of weapons">
         <img class="card-img-top img-weapon w-100" src={{weapon.image}} alt="Card image cap">
@@ -70,10 +80,17 @@
             <li>Dodge : {{ weapon.esquive}}</li>
             <li>Usury : {{ weapon.usure }}</li>
           </ul>
-          <a class="btn w-50" (click)="addWeapon(weapon.id)">Add this Weapon to {{heroConcrete[0].name}}</a>
+          <a class="btn w-50" (click)="addWeapon(weapon.id)">Add this Weapon to {{heroConcrete.name}}</a>
         </div>
       </div>
-    </div>
+    </div>-->
+
+  
+    
       
-    <button class="goback" type="button" (click)="goBack()">go back</button>
+    
   </div>
+
+  <script>
+    
+  </script>

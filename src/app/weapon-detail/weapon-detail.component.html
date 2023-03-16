@@ -1,31 +1,32 @@
 <div *ngIf="armeConcrete">
-    <h2>{{armeConcrete[0].GetName() | uppercase}} Details</h2>
+  <button class="bg-transparent border-0" type="button" (click)="goBack()" title="Go back"><img src="../../assets/img/back.png" alt="Go back"></button>
+    <h2>{{armeConcrete.GetName() | uppercase}} Details</h2>
 
     <div class="d-flex">
-      <img class="rounded" src={{armeConcrete[0].GetImage()}} alt="" width="400px">
+      <img class="rounded" src={{armeConcrete.image}} alt="" width="400px">
       <div class="m-3 d-flex flex-column w-50">
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle " style="margin-right : 15px;" for="armeConcrete[0].GetName()">Name: </label>
-            <input class="align-middle ml-2" id="armeConcrete[0].GetName()" [(ngModel)]="armeConcrete[0].name" (change)="UpdateName(armeConcrete[0].GetName())" placeholder="Weapon name"/>
+            <input class="align-middle ml-2" id="armeConcrete.GetName()" [(ngModel)]="armeConcrete.name" (change)="UpdateName(armeConcrete.GetName())" placeholder="Weapon name"/>
           </div>
           </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle mr-2" style="margin-right : 15px;" for="weapon-attaque">Attack:</label>
-            <input class="align-middle ml-2" id="weapon-attaque" [(ngModel)]="armeConcrete[0].attaque" (change)="UpdateAttaque(armeConcrete[0].GetAttaque())" placeholder="Weapon attack">
+            <input class="align-middle ml-2" id="weapon-attaque" [(ngModel)]="armeConcrete.attaque" (change)="UpdateAttaque(armeConcrete.GetAttaque())" placeholder="Weapon attack">
           </div>
         </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle" style="margin-right : 15px;" for="weapon-esquive">Dodge:</label>
-            <input class="align-middle ml-2" id="weapon-esquive" [(ngModel)]="armeConcrete[0].esquive" (change)="UpdateEsquive(armeConcrete[0].GetEsquive())" placeholder="Weapon dodge">
+            <input class="align-middle ml-2" id="weapon-esquive" [(ngModel)]="armeConcrete.esquive" (change)="UpdateEsquive(armeConcrete.GetEsquive())" placeholder="Weapon dodge">
           </div>
         </div>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle" style="margin-right : 15px;" for="weapon-usury" >Usury:</label>
-            <input class="align-middle ml-2" id="weapon-usury" [(ngModel)]="armeConcrete[0].usure" (change)="UpdateUsure(armeConcrete[0].GetUsure())" placeholder="Weapon usury">
+            <input class="align-middle ml-2" id="weapon-usury" [(ngModel)]="armeConcrete.usure" (change)="UpdateUsure(armeConcrete.GetUsure())" placeholder="Weapon usury">
           </div>
         </div>
         <div class="d-flex m-2 justify-content-between">
@@ -36,5 +37,5 @@
         </div>
       </div>
     </div>
-    <button type="button" (click)="goBack()">go back</button>
+    
 </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { from, map, Observable, of } from 'rxjs';
 
 import { Hero, HeroConcrete, HeroId } from './data/hero';
 import { Armes } from './data/armes';
@@ -42,7 +42,7 @@ export class HeroService {
         let heroId: HeroId = { id, ...data } as HeroId;
 
         //
-        return new HeroConcrete(heroId.id, heroId.name, heroId.attaque, heroId.esquive, heroId.degats, heroId.pv);
+        return new HeroConcrete(heroId.id, heroId.name, heroId.attaque, heroId.esquive, heroId.degats, heroId.pv, heroId.image);
       }))
     );
 
@@ -72,7 +72,7 @@ export class HeroService {
           const data = doc.data() as HeroConcrete;
           const id = doc.id;
           let heroId: HeroId = { id, ...data } as HeroId;
-          return new HeroConcrete(heroId.id, heroId.name, heroId.attaque, heroId.esquive, heroId.degats, heroId.pv);
+          return new HeroConcrete(heroId.id, heroId.name, heroId.attaque, heroId.esquive, heroId.degats, heroId.pv, heroId.image);
         } else {
           throw new Error(`Hero with ID ${heroId} does not exist.`);
         }
@@ -80,6 +80,9 @@ export class HeroService {
     );
   }
 
-  
+  updateHero(hero: string, data: Partial<HeroConcrete>): Observable<void> {
+    const heroDoc = this.afs.doc<HeroConcrete>(`${HeroService.url}/${hero}`);
+    return from(heroDoc.update(data));
+  }
 
 }

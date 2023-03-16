@@ -21,14 +21,14 @@ export class ArmesConcrete implements ArmeId {
     degats: number;
     usure: number;
     image: string;
-    constructor(id:string, name:string, attaque: number, esquive: number, degats: number, usure: number){
+    constructor(id:string, name:string, attaque: number, esquive: number, degats: number, usure: number, image: string){
         this.id = id;
         this.name = name;
         this.attaque = attaque;
         this.esquive = esquive;
         this.degats = degats;
         this.usure = usure;
-        this.image = "";
+        this.image = image;
     }
 
     //Setters

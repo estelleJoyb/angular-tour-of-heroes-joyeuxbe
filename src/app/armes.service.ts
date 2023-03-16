@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { from, map, Observable, of } from 'rxjs';
 
 import { ArmeId, ArmesConcrete, Armes } from './data/armes';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
+import { HeroConcrete } from './data/hero';
+import { HeroService } from './hero.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -41,7 +43,7 @@ export class ArmesService {
         let ArmesId: ArmeId = { id, ...data } as ArmeId;
 
         //
-        return new ArmesConcrete(ArmesId.id, ArmesId.name, ArmesId.attaque, ArmesId.esquive, ArmesId.degats, ArmesId.usure);
+        return new ArmesConcrete(ArmesId.id, ArmesId.name, ArmesId.attaque, ArmesId.esquive, ArmesId.degats, ArmesId.usure, ArmesId.image);
       }))
     );
 
@@ -61,5 +63,27 @@ export class ArmesService {
         }
       })
     );
+  }
+
+
+  getWeaponConcrete(armeId: string): Observable<ArmesConcrete> {
+    let weaponDoc = this.afs.doc<ArmesConcrete>(`${ArmesService.url}/${armeId}`);
+    return weaponDoc.get().pipe(
+      map(doc => {
+        if(doc.exists){
+          const data = doc.data() as ArmesConcrete;
+          const id = doc.id;
+          let armeId: ArmeId = { id, ...data} as ArmeId;
+          return new ArmesConcrete(armeId.id, armeId.name, armeId.attaque, armeId.esquive, armeId.degats, armeId.usure, armeId.image);
+        }else{
+          throw new Error(`Weapon with ID ${armeId} does not exist.`);
+        }
+      })
+    );
+  }
+
+  updateArme(arme: string, data: Partial<ArmesConcrete>): Observable<void> {
+    const armeDoc = this.afs.doc<ArmesConcrete>(`${ArmesService.url}/${arme}`);
+    return from(armeDoc.update(data));
   }
 }

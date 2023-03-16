@@ -14,112 +14,31 @@ import { Observable } from 'rxjs';
   styleUrls: [ './weapon-detail.component.css' ]
 })
 export class WeaponDetailComponent implements OnInit {
-//   hero: Hero | undefined;
-//   weapons: Armes[] | undefined;
-//   weapon: Armes | undefined;
-
-//   constructor(
-//     private route: ActivatedRoute,
-//     private heroService: HeroService,
-//     private armeService: ArmesService,
-//     private location: Location
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.getWeapon();
-//     this.armeService.selectedArme = this.weapon;
-//   }
-//   getHero(): void {
-//     this.heroService.getHeroes()
-//     .subscribe(hero => {this.hero = hero});
-//   }
-
-//   getWeapon(): void {
-//     //const id = Number(this.route.snapshot.paramMap.get('id'));
-//     this.armeService.getWeapons()
-//       .subscribe(weapon => this.weapon = weapon);
-//   }
-
-//   goBack(): void {
-//     this.location.back();
-//   }
-
-//   getAllWeapons():void{
-//     this.armeService.getWeapons()
-//       .subscribe(weapons => this.weapons = weapons);
-//   }
-
-//   UpdateName(name : string){
-//     if(this.weapon != undefined && name != ""){
-//       this.armeService.SetName(name);
-//     }
-//   }
-
-//   UpdateAttaque(attaque : number){
-//     if(this.weapon != undefined && attaque >= 0){
-//       this.armeService.SetAttaque(attaque);
-//     }
-//   }
-
-//   UpdateEsquive(esquive : number){
-//     if(this.weapon != undefined && esquive >= 0){
-//       this.armeService.SetEsquive(esquive);
-//     }
-//   }
-
-//   UpdateUsure(usure : number){
-//     if(this.weapon != undefined && usure >= 0){
-//       this.armeService.SetUsure(usure);
-//     }
-//   }
-
-
-
-//   getImage(event: Event): void {
-//     if(event.target ==null){
-//       return;
-//     }
-//     const target= event.target as HTMLInputElement;
-//     const files: File = (target.files as FileList)[0];
-    
-//     const reader = new FileReader();
-//     reader.readAsDataURL(files);
-//     reader.onload = () => { 
-//       if(reader.result != null && this.weapon != undefined){
-//         const arrayBuffer = reader.result; 
-//         this.armeService.SetImage(arrayBuffer.toString());
-//         console.log(arrayBuffer.toString());
-//       }
-      
-//     }
-// }
-//weapons: ArmesConcrete[] | undefined;
   armeAsync?: Observable<ArmeId[]>;
   armeConcreteAsync?: Observable<ArmesConcrete[]>;
   arme: ArmeId[];
-  armeConcrete: ArmesConcrete[];
+  armeConcrete: ArmesConcrete;
   
   constructor(
-    //private route: ActivatedRoute,
-    //private heroService: HeroService,
+    private route: ActivatedRoute,
     private armeService: ArmesService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
     this.getArme();
     this.getArmeAsync();
     this.getArmesConcreteAsync();
-    this.getArmeConcrete();
-    //this.getAllWeapons();
+    this.getArmeConcrete(id);
   }
 
   getArme(): void {
     this.armeService.getWeapons()
     .subscribe(arme => {this.arme = arme});
   }
-  getArmeConcrete():void {
-    this.armeService.getWeaponsConcrete()
+  getArmeConcrete(id : string):void {
+    this.armeService.getWeaponConcrete(id)
       .subscribe(armeConcrete => {
         this.armeConcrete = armeConcrete;
       });
@@ -133,35 +52,39 @@ export class WeaponDetailComponent implements OnInit {
   }
 
   goBack(): void {
+    //quitter la page
     this.location.back();
   }
 
-  // getAllWeapons():void{
-  //   this.armeService.getWeaponsConcrete()
-  //     .subscribe(weapons => this.weapons = weapons);
-  // }
-
   UpdateName(name : string){
-    if(this.armeConcrete[0] != undefined && name != ""){
-      this.armeConcrete[0].SetName(name);
+    if(this.armeConcrete != undefined && name != ""){
+      this.armeConcrete.SetName(name);
+      const dataName: Partial<ArmesConcrete> = { name: this.armeConcrete.GetName() };
+      this.armeService.updateArme(this.armeConcrete.id, dataName); 
     }
   }
 
   UpdateAttaque(attaque : number){
     if(this.armeConcrete != undefined && attaque >= 0){
-      this.armeConcrete[0].SetAttaque(attaque);
+      this.armeConcrete.SetAttaque(attaque);
+      const dataAttaque: Partial<ArmesConcrete> = { attaque: this.armeConcrete.GetAttaque()};
+      this.armeService.updateArme(this.armeConcrete.id, dataAttaque);
     }
   }
 
   UpdateEsquive(esquive : number){
     if(this.armeConcrete != undefined && esquive >= 0){
-      this.armeConcrete[0].SetEsquive(esquive);
+      this.armeConcrete.SetEsquive(esquive);
+      const dataEsquive: Partial<ArmesConcrete> = { esquive: this.armeConcrete.GetEsquive()};
+      this.armeService.updateArme(this.armeConcrete.id, dataEsquive);
     }
   }
 
   UpdateUsure(usure : number){
     if(this.armeConcrete != undefined && usure >= 0){
-      this.armeConcrete[0].SetUsure(usure);
+      this.armeConcrete.SetUsure(usure);
+      const dataUsure: Partial<ArmesConcrete> = { usure: this.armeConcrete.GetUsure()};
+      this.armeService.updateArme(this.armeConcrete.id, dataUsure);
     }
   }
 
@@ -180,8 +103,9 @@ export class WeaponDetailComponent implements OnInit {
           const arrayBuffer = reader.result; 
           //const decoder = new TextDecoder('utf-8');
           //const stringImg = decoder.decode(arrayBuffer);
-          this.armeConcrete[0].SetImage(arrayBuffer.toString());
-          console.log(arrayBuffer.toString());
+          this.armeConcrete.SetImage(arrayBuffer.toString());
+          const dataImage: Partial<ArmesConcrete> = { image: this.armeConcrete.GetImage()};
+          this.armeService.updateArme(this.armeConcrete.id, dataImage);
         }
         
       }

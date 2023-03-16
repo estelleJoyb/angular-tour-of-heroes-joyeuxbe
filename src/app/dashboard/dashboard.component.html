@@ -5,7 +5,7 @@
             <h4 class="text-center"><strong>Top Heroes</strong></h4>
             <hr>
             <div class="d-flex flex-wrap">
-                <div class="profile-card-4 text-center" *ngFor="let heroe of heroes"><img src={{heroe.image}} class="img img-responsive">
+                <div class="profile-card-4 text-center" *ngFor="let heroe of heroes"><img src={{heroe.getImage()}} class="img img-responsive">
                     <div class="profile-content">
                         <div class="profile-name">{{heroe.name | uppercase }}
                             <p>Tour of heroe</p>
@@ -15,25 +15,25 @@
                             <div class="col-xs-4">
                                 <div class="profile-overview">
                                     <p>Damage</p>
-                                    <h4>{{ heroe.degats}}</h4>
+                                    <h4>{{ heroe.getDegats()}}</h4>
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="profile-overview">
                                     <p>Attack</p>
-                                    <h4>{{ heroe.attaque}}</h4>
+                                    <h4>{{ heroe.getAttaque()}}</h4>
                                     </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="profile-overview">
                                     <p>Dodge</p>
-                                    <h4>{{ heroe.esquive}}</h4>
+                                    <h4>{{ heroe.getEsquive()}}</h4>
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="profile-overview">
                                     <p>Hit Point</p>
-                                    <h4>{{ heroe.pv}}</h4>
+                                    <h4>{{ heroe.getPv()}}</h4>
                                 </div>
                             </div>
                             <a routerLink="/detail/{{heroe.id}}" class="bg-dark m-2 text-white rounded mx-auto">See this Heroe</a>

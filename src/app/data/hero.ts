@@ -23,14 +23,14 @@ export class HeroConcrete implements HeroId {
     pv : number;
     image :string;
     armes : ArmesConcrete[];
-    constructor(id : string, name : string, attaque : number, esquive : number, degats : number, pv: number){
+    constructor(id : string, name : string, attaque : number, esquive : number, degats : number, pv: number, image: string){
         this.id = id;
         this.name = name;
         this.attaque = attaque;
         this.esquive = esquive;
         this.degats = degats;
         this.pv = pv;
-        this.image = "";
+        this.image = image;
         this.armes = [];
     }
     //setters

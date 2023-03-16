@@ -14,15 +14,17 @@ import { DashboardWeaponsComponent } from './dashboard-weapons/dashboard-weapons
 import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-//import {environment} from '../environments/environment';
+import {environment} from '../environments/environment';
 import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { CreateHeroComponent } from './create-hero/create-hero.component';
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    //provideFirebaseApp(() => initializeApp(environment.firebase)),
-    //provideFirestore(() => getFirestore()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
   declarations: [
     AppComponent,
@@ -32,9 +34,10 @@ import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
     MessagesComponent,
     WeaponsComponent,
     DashboardWeaponsComponent,
-    WeaponDetailComponent
+    WeaponDetailComponent,
+    CreateHeroComponent
   ],
   bootstrap: [ AppComponent ],
-  //providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { Location } from '@angular/common';
 import { Hero, HeroConcrete, HeroId } from '../data/hero';
 import { HeroService } from '../hero.service';
 
@@ -14,13 +14,19 @@ export class HeroesComponent implements OnInit {
   heroesConcreteAsync?: Observable<HeroConcrete[]>;
   heroes: HeroId[];
   heroesConcrete: HeroConcrete[];
-  constructor(private heroService: HeroService) { this.heroes = new Array(); }
+  constructor(
+    private heroService: HeroService,
+    private location: Location
+    ) { 
+    this.heroes = new Array();
+  }
 
   ngOnInit(): void {
     this.getHeroes();
     this.getHeroesConcrete();
     this.getHeroesAsync();
     this.getHeroesConcreteAsync();
+    
   }
 
   getHeroes(): void {
@@ -38,9 +44,8 @@ export class HeroesComponent implements OnInit {
     this.heroService.getHeroesConcrete()
       .subscribe(heroesConcrete => {
         this.heroesConcrete = heroesConcrete;
+        console.log(this.heroesConcrete[0].getImage());
       });
   }
-  Create():void{
-    
-  }
+  
 }
