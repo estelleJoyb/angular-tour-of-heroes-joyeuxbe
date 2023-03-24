@@ -49,43 +49,36 @@
       </div>
     </div>
     
-    <div *ngIf="heroConcrete.armes.length != 0">
+    <div *ngIf="heroConcrete.armes.length != 0" >
       <h3 class="mt-5">Weapons of {{heroConcrete.getName()}}</h3>
-      <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of heroConcrete.armes">
-        <img class="card-img-top img-weapon w-100" src={{weapon.image}} alt="Card image cap">
+      <div class="weapon-menu">
+        <div class="card" style="width:22%; margin: 5px" *ngFor="let weapon of heroConcrete.armes">
+          <img class="card-img-top img-weapon" src={{weapon.image}} alt="Card image cap" width="50%">
+          <div class="card-body">
+            <h5 class="card-title">{{weapon.name}}</h5>
+            <div class="d-flex justify-content-between">
+              <a routerLink="/detailweapon/{{weapon.id}}" class="small bg-dark mt-2 text-white rounded">See this Weapon</a>
+              <a (click)="RemoveWeapon(weapon.id)" class="small bg-dark mt-2 text-white rounded">Remove Weapon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <h3 class="mt-5">Weapons available</h3>
+    <div *ngIf="weapons && weapons.length >0" class="weapon-menu">
+      
+      <div class="card" style="width:22%; margin: 5px" *ngFor="let weapon of weapons">
+        <img class="card-img-top img-weapon" src={{weapon.image}} alt="Card image cap" width="50%">
         <div class="card-body">
-          <h5 class="card-title">{{weapon.name}}</h5>
-          <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-          <ul>
-            <li>Damage : {{ weapon.degats}}</li>
-            <li>Attack : {{ weapon.attaque}}</li>
-            <li>Dodge : {{ weapon.esquive}}</li>
-            <li>Usury : {{ weapon.usure }}</li>
-          </ul>
-          <a routerLink="/detailweapon/{{weapon.id}}" class="btn w-50">See this Weapon</a>
+          <h5 class="card-title">{{weapon.name}}</h5> 
+          <a class="small bg-dark m-2 text-white rounded mx-auto w-75" (click)="addWeapon(weapon.id)">Add this Weapon to {{heroConcrete.name}}</a>
         </div>
       </div>
     </div>
 
-    <h3 class="mt-5">Weapons available</h3>
-    <!-- <div *ngIf="weapons && weapons.length >0" class="weapon-menu">
-      
-      <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of weapons">
-        <img class="card-img-top img-weapon w-100" src={{weapon.image}} alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{weapon.name}}</h5>
-          <ul>
-            <li>Damage : {{ weapon.degats}}</li>
-            <li>Attack : {{ weapon.attaque}}</li>
-            <li>Dodge : {{ weapon.esquive}}</li>
-            <li>Usury : {{ weapon.usure }}</li>
-          </ul>
-          <a class="btn w-50" (click)="addWeapon(weapon.id)">Add this Weapon to {{heroConcrete.name}}</a>
-        </div>
-      </div>
-    </div>-->
-
-  
+    <a id="btn-weapon" (click)="SeeAllWeapons()" class="small bg-dark mt-2 text-white rounded" >{{textSeeWeapon}}</a>
     
       
     

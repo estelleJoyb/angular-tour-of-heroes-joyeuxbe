@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: [ './hero-detail.component.css' ]
 })
 export class HeroDetailComponent implements OnInit {
-  //hero: HeroConcrete | undefined;
+  textSeeWeapon: string;
   weapons: ArmesConcrete[] | undefined;
   heroAsync?: Observable<HeroId[]>;
   heroConcreteAsync?: Observable<HeroConcrete[]>;
@@ -30,6 +30,7 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.textSeeWeapon = "See more Weapons";
     this.getHero();
     this.getHeroAsync();
     this.getHeroConcreteAsync();
@@ -61,8 +62,21 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getAllWeapons():void{
-    this.armeService.getWeaponsConcrete()
-      .subscribe(weapons => this.weapons = weapons);
+      this.armeService.getWeaponsConcrete()
+      .subscribe(weapons => this.weapons = weapons.slice(0,4));
+  }
+
+  SeeAllWeapons(): void {
+    if(this.weapons.length > 4){
+      this.getAllWeapons();
+      this.textSeeWeapon = "See more Weapons";
+    }else{
+      this.armeService.getWeaponsConcrete()
+      .subscribe(weapons =>{
+        this.weapons = weapons;
+        this.textSeeWeapon = "See less Weapons";
+      });
+    }
   }
 
   UpdateName(name : string){
@@ -129,12 +143,22 @@ export class HeroDetailComponent implements OnInit {
   }
 
   addWeapon(id: string){
-    var weapon;
-    this.armeService.getWeapon(id)
-      .subscribe(weapon => weapon = weapon);
-    if(this.heroConcrete != undefined && weapon != undefined){
-      this.heroConcrete.AddArme(weapon);
-    }
+    console.log("ADD WEAPON !");
+    this.armeService.getWeaponConcrete(id)
+      .subscribe(weapon =>{
+        var weapon = weapon
+        if(this.heroConcrete != undefined && weapon != undefined){
+          this.heroConcrete.AddArme(weapon);
+          console.log("weapon : "+weapon);
+          console.log("ARMES : "+this.heroConcrete.armes);
+          const data: Partial<HeroConcrete> = { armes: this.heroConcrete.armes};
+          this.heroService.updateHero(this.heroConcrete.id, data);
+        }
+      });
+  }
+
+  RemoveWeapon(id: string){
+
   }
 
   

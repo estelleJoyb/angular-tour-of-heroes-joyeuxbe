@@ -86,4 +86,24 @@ export class ArmesService {
     const armeDoc = this.afs.doc<ArmesConcrete>(`${ArmesService.url}/${arme}`);
     return from(armeDoc.update(data));
   }
+
+  createArme(arme: ArmesConcrete){
+    const armeCollection = this.afs.collection<ArmesConcrete>(`${ArmesService.url}`);
+
+    let uneArme: Armes = {} as Armes;
+    uneArme.name = arme.name;
+    uneArme.attaque = arme.attaque;
+    uneArme.degats = arme.degats;
+    uneArme.esquive = arme.esquive;
+    uneArme.image = arme.image;
+    uneArme.usure = arme.usure;
+    var ArmeObj = JSON.parse(JSON.stringify(uneArme));
+    //on ajoute le hero à la bd
+    return armeCollection.add(ArmeObj);
+  }
+
+  deleteArme(arme: string): Observable<void> {
+    const armeDoc = this.afs.doc<ArmesConcrete>(`${ArmesService.url}/${arme}`);
+    return from(armeDoc.delete());
+  }
 }

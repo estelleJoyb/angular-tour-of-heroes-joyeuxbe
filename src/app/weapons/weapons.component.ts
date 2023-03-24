@@ -38,4 +38,8 @@ export class WeaponsComponent implements OnInit {
     this.armesService.getWeaponsConcrete()
     .subscribe(armesConcrete => {this.armesConcrete = armesConcrete});
   }
+
+  deleteWeapon(arme: string): void {
+    this.armesService.deleteArme(arme);
+  }
 }

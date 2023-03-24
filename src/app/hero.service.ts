@@ -5,6 +5,7 @@ import { Hero, HeroConcrete, HeroId } from './data/hero';
 import { Armes } from './data/armes';
 import { ArmesService } from './armes.service';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
+import { DocumentReference } from 'firebase/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class HeroService {
@@ -85,4 +86,28 @@ export class HeroService {
     return from(heroDoc.update(data));
   }
 
+  createHero(hero: HeroConcrete){
+    const heroCollection = this.afs.collection<HeroConcrete>(`${HeroService.url}`);
+
+    let leHero: Hero = {} as Hero;
+    leHero.name = hero.name;
+    leHero.attaque = hero.attaque;
+    leHero.degats = hero.degats;
+    leHero.esquive = hero.esquive;
+    leHero.image = hero.image;
+    leHero.pv = hero.pv;
+    leHero.armes = hero.armes;
+    var HeroObj = JSON.parse(JSON.stringify(leHero));
+    //on ajoute le hero à la bd
+    return heroCollection.add(HeroObj);
+  }
+
+  deleteHero(hero: string): Observable<void> {
+    const heroDoc = this.afs.doc<HeroConcrete>(`${HeroService.url}/${hero}`);
+    return from(heroDoc.delete());
+  }
+
+  unsubscribeGetHeroe(){
+    //this.subscriptionGetHeroes?.unsubribe();
+  }
 }

@@ -29,6 +29,10 @@ export class HeroesComponent implements OnInit {
     
   }
 
+  ngOnDestroy(): void{
+    this.heroService.unsubscribeGetHeroe();
+  }
+
   getHeroes(): void {
     this.heroService.getHeroes()
     .subscribe(heroes => {this.heroes = heroes});
@@ -46,6 +50,10 @@ export class HeroesComponent implements OnInit {
         this.heroesConcrete = heroesConcrete;
         console.log(this.heroesConcrete[0].getImage());
       });
+  }
+
+  deleteHeroe(hero: string): void {
+    this.heroService.deleteHero(hero);
   }
   
 }

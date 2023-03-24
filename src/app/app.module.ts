@@ -17,6 +17,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
 import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { CreateHeroComponent } from './create-hero/create-hero.component';
+import { CreateWeaponComponent } from './create-weapon/create-weapon.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { CreateHeroComponent } from './create-hero/create-hero.component';
     WeaponsComponent,
     DashboardWeaponsComponent,
     WeaponDetailComponent,
-    CreateHeroComponent
+    CreateHeroComponent,
+    CreateWeaponComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],

@@ -36,6 +36,7 @@
                                     <h4>{{ heroe.getPv()}}</h4>
                                 </div>
                             </div>
+                            <a (click)="deleteHeroe(heroe.id)" class="bg-dark m-2 text-white rounded mx-auto">Delete this Heroe</a>
                             <a routerLink="/detail/{{heroe.id}}" class="bg-dark m-2 text-white rounded mx-auto">See this Heroe</a>
                         </div>
                 </div>

@@ -1,46 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { HeroService } from '../hero.service';
-import { Hero, HeroConcrete } from '../data/hero';
+import { ArmesService } from '../armes.service';
+import { Armes, ArmesConcrete } from '../data/armes';
 @Component({
-  selector: 'app-create-hero',
-  templateUrl: './create-hero.component.html',
-  styleUrls: ['./create-hero.component.css']
+  selector: 'app-create-weapon',
+  templateUrl: './create-weapon.component.html',
+  styleUrls: ['./create-weapon.component.css']
 })
-export class CreateHeroComponent implements OnInit {
-  hero: HeroConcrete;
+export class CreateWeaponComponent implements OnInit {
+  arme: ArmesConcrete;
   name: string;
   degats: number;
   attaque: number;
   esquive: number;
-  pv: number;
+  usure: number;
   image: string;
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private heroService: HeroService
+    private armesService: ArmesService
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.hero = new HeroConcrete("","",0,0,0,0,"");
+    this.arme = new ArmesConcrete("","",0,0,0,0,"");
   }
   goBack(): void {
     this.location.back();//on quitte la page
   }
 
   Create(){
-    this.hero.setName(this.name);
-    this.hero.setAttaque(this.attaque);
-    this.hero.setDegats(this.degats);
-    this.hero.setEsquive(this.esquive);
-    this.hero.setImage(this.image);
-    this.hero.setPv(this.pv);
+    this.arme.SetName(this.name);
+    this.arme.SetAttaque(this.attaque);
+    this.arme.SetDegats(this.degats);
+    this.arme.SetEsquive(this.esquive);
+    this.arme.SetImage(this.image);
+    this.arme.SetUsure(this.usure);
     if(this.name != ""){
-      this.heroService.createHero(this.hero);
+      this.armesService.createArme(this.arme);
     }
-    this.location.back();//on quitte la page
+    this.location.back(); //on quitte la page
   }
 
   getImage(event: Event): void {
@@ -49,7 +49,6 @@ export class CreateHeroComponent implements OnInit {
     }
     const target= event.target as HTMLInputElement;
     const files: File = (target.files as FileList)[0];
-    //const files = (event.target as HTMLInputElement).files[0]; //event.target.files;
     
     const reader = new FileReader();
     reader.readAsDataURL(files);
@@ -84,9 +83,9 @@ export class CreateHeroComponent implements OnInit {
     }
   }
 
-  UpdatePv(pv: number){
-    if(pv >=0){
-      this.pv = pv;
+  UpdateUsure(usure: number){
+    if(usure >=0){
+      this.usure = usure;
     }
   }
 }
