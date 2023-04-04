@@ -307,13 +307,14 @@
   <div class="d-flex justify-content-between">
     <h1>{{title}}</h1>
     <nav>
-      <a class="btn m-1 navlink" routerLink="/dashboard"><img src="/assets/img/home.png" alt="" width="25px"></a>
+      <a class="btn m-1 navlink" title="Home" routerLink="/dashboard"><img src="/assets/img/home.png" alt="Home" width="25px"></a>
       <a class="btn m-1 navlink" routerLink="/heroes">Heroes</a>
       <a class="btn m-1 navlink" routerLink="/weapons">Weapons</a>
+      <a *ngIf="authService.userData as user" class="btn m-1 navlink" title="Sign Out" (click)="authService.SignOut()"><img src="/assets/img/deconnexion.png" alt="Sign Out" width="25px"></a>
+      <a *ngIf="!authService.userData" class="btn m-1 navlink" title="Sign Up" routerLink="/register-user"><img src="/assets/img/connexion.png" alt="Sign Up" width="25px"></a>
     </nav>
   </div>
   
-  <router-outlet></router-outlet>
   <router-outlet></router-outlet>
 </div>
 
