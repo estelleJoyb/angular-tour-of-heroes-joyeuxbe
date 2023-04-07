@@ -20,6 +20,8 @@ export class HeroDetailComponent implements OnInit {
   heroConcreteAsync?: Observable<HeroConcrete[]>;
   hero: HeroId[];
   heroConcrete: HeroConcrete;
+  progress:number;
+  styleprogress: number;
   
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,6 @@ export class HeroDetailComponent implements OnInit {
     this.getHeroConcreteAsync();
     this.getHeroConcrete(id);
     this.getAllWeapons();
-
   }
 
   getHero(): void {
@@ -47,6 +48,16 @@ export class HeroDetailComponent implements OnInit {
     this.heroService.getHeroConcrete(id)
       .subscribe(heroConcrete => {
         this.heroConcrete = heroConcrete;
+        this.progress = +this.heroConcrete.getAttaque() + +this.heroConcrete.getDegats() + +this.heroConcrete.getEsquive() + +this.heroConcrete.getPv();
+        if(this.progress > 40){
+          this.UpdateAttaque(10);
+          this.UpdateDegats(10);
+          this.UpdateEsquive(10);
+          this.Updatepv(10);
+        }
+        console.log("progress getHeroConcrete : "+this.progress);
+        this.RecalculProgress();
+        console.log("progress getHeroConcrete : "+this.progress);
       });
   }
   getHeroAsync(): void {
@@ -78,44 +89,62 @@ export class HeroDetailComponent implements OnInit {
       });
     }
   }
+  RecalculProgress(){
+    this.progress = +this.heroConcrete.getAttaque() + +this.heroConcrete.getDegats() + +this.heroConcrete.getEsquive() + +this.heroConcrete.getPv();
+    
+    this.styleprogress = (+this.progress * 100)/40;
+    console.log("REcalcul progress -- style progress : "+this.styleprogress+"\n progress : "+this.progress);
+  }
 
   UpdateName(name : string){
     if(this.heroConcrete != undefined && name != ""){
       this.heroConcrete.setName(name);
       const dataName: Partial<HeroConcrete> = { name: this.heroConcrete.getName() };
       this.heroService.updateHero(this.heroConcrete.id, dataName);
+      this.RecalculProgress();
     }
   }
 
   UpdateDegats(damage: number){
-    if(this.heroConcrete != undefined && damage >= 0){
+    var degatsmax = 40 - (+this.heroConcrete.getAttaque() + +this.heroConcrete.getEsquive() + +this.heroConcrete.getPv());
+    if(this.heroConcrete != undefined && damage >= 0 && damage <= degatsmax){
+      console.log("updating degats");
       this.heroConcrete.setDegats(damage);
       const dataDegats: Partial<HeroConcrete> = { degats: this.heroConcrete.getDegats()};
       this.heroService.updateHero(this.heroConcrete.id, dataDegats);
+      this.RecalculProgress();
+    }else{
+      console.log("not updating degats\n degats max : "+degatsmax+'\ndamage : '+damage);
     }
   }
 
   UpdateAttaque(attaque : number){
-    if(this.heroConcrete != undefined && attaque >= 0){
+    var attaquemax = 40 - (this.progress - this.heroConcrete.getAttaque());
+    if(this.heroConcrete != undefined && attaque >= 0 && attaque <= attaquemax){
       this.heroConcrete.setAttaque(attaque);
       const dataAttaque: Partial<HeroConcrete> = { attaque: this.heroConcrete.getAttaque()};
       this.heroService.updateHero(this.heroConcrete.id, dataAttaque);
+      this.RecalculProgress();
     }
   }
 
   UpdateEsquive(esquive : number){
-    if(this.heroConcrete != undefined && esquive >= 0){
+    var esquivemax = 40 - (this.progress - this.heroConcrete.getEsquive());
+    if(this.heroConcrete != undefined && esquive >= 0 && esquive <= esquivemax){
       this.heroConcrete.setEsquive(esquive);
       const dataEsquive: Partial<HeroConcrete> = { esquive: this.heroConcrete.getEsquive()};
       this.heroService.updateHero(this.heroConcrete.id, dataEsquive);
+      this.RecalculProgress();
     }
   }
 
   Updatepv(pv : number){
-    if(this.heroConcrete != undefined && pv >= 0){
+    var pvmax = 40 - (this.progress - this.heroConcrete.getPv());
+    if(this.heroConcrete != undefined && pv >= 0 && pv <= pvmax){
       this.heroConcrete.setPv(pv);
       const dataPv: Partial<HeroConcrete> = { pv: this.heroConcrete.getPv()};
       this.heroService.updateHero(this.heroConcrete.id, dataPv);
+      this.RecalculProgress();
     }
   }
 

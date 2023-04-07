@@ -1,21 +1,5 @@
 <h2>Top Weapons</h2>
 <div class="weapon-menu">
-  <!-- <div class="card mt-3 mb-3" style="width:45%;" *ngFor="let weapon of weapons">
-    <img class="card-img-top img-weapon w-100" src={{weapon.image}} alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{weapon.name}}</h5>
-      
-      <ul>
-        <li>Damage : {{ weapon.degats}}</li>
-        <li>Attack : {{ weapon.attaque}}</li>
-        <li>Dodge : {{ weapon.esquive}}</li>
-        <li>Usury : {{ weapon.usure }}</li>
-      </ul>
-      <a routerLink="/detailweapon/{{weapon.id}}" class="btn w-50">See this Weapon</a>
-    </div>
-  </div> -->
-
-
   <div class="d-flex flex-wrap">
     <div class="profile-card-4 text-center" *ngFor="let weapon of weapons"><img src={{weapon.image}} class="img img-responsive bg-gris">
       <div class="profile-content">
