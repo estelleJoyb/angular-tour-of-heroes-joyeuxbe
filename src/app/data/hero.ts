@@ -1,5 +1,6 @@
 
 import { Armes, ArmesConcrete } from '../data/armes';
+import { ArmesService } from '../armes.service';
 export interface Hero{
     name: string;
     attaque: number;
@@ -76,31 +77,31 @@ export class HeroConcrete implements HeroId {
     getAttaque():number {
         //il faut qu'on parcoure les armes pour savoir
         var attaque = this.attaque;
-        this.armes.forEach(arme => {
-            if(arme.EstUtilisable()){
-                attaque += arme.GetAttaque();
-            }
-        });
+        // this.armes.forEach(arme => {
+        //     if(arme.EstUtilisable()){
+        //         attaque += arme.GetAttaque();
+        //     }
+        // });
         return attaque;
     }
     getEsquive():number {
         //il faut qu'on parcoure les armes pour savoir
         var esquive = this.esquive;
-        this.armes.forEach(arme => {
-            if(arme.EstUtilisable()){
-                esquive += arme.GetEsquive();
-            }
-        });
+        // this.armes.forEach(arme => {
+        //     if(arme.EstUtilisable()){
+        //         esquive += arme.GetEsquive();
+        //     }
+        // });
         return esquive;
     }
     getDegats():number {
         //il faut qu'on parcoure les armes pour savoir
         var degats = this.degats;
-        this.armes.forEach(arme => {
-            if(arme.EstUtilisable()){
-                degats += arme.GetDegats();
-            }
-        });
+        // this.armes.forEach(arme => {
+        //     if(arme.EstUtilisable()){
+        //         degats += arme.GetDegats();
+        //     }
+        // });
         return degats;
     }
     getPv():number{
@@ -121,11 +122,11 @@ export class HeroConcrete implements HeroId {
     //prérequis : le héro qu'on attaque doit etre vivant
     //prend en paramètre un hero et lui mets les dégats
     Attaque(hero : HeroConcrete):void {
-        this.armes.forEach(arme => {
-            if(arme.EstUtilisable()){
-                arme.SetUsure(arme.GetUsure()-1); //on use nos armes
-            }
-        });
+        // this.armes.forEach(arme => {
+        //     if(arme.EstUtilisable()){
+        //         arme.SetUsure(arme.GetUsure()-1); //on use nos armes
+        //     }
+        // });
         if((hero.getPv() - (this.getDegats()-hero.getEsquive())) >= 0){ 
             // il ne vas pas mourrir sous notre attaque
             hero.setPv(this.getDegats()-hero.getEsquive());
@@ -136,8 +137,9 @@ export class HeroConcrete implements HeroId {
     }
 
     //ajoute une arme au héro et retourne void
-    AddArme(arme: ArmesConcrete):void{
+    AddArme(arme: ArmesConcrete):void{//arme: ArmesConcrete):void{
         this.armes.push(arme); //ajoute l'arme à l'array d'arme
+        //this.armes.push(armeid);
     }
 
     /*  prends en parametre une arme 
@@ -145,9 +147,9 @@ export class HeroConcrete implements HeroId {
         renvoie void
     */
     RemoveArme(arme: ArmesConcrete):void{
-        var index = this.armes.indexOf(arme);
-        if(index > -1){//l'index a été trouvé
-            this.armes.splice(index, 1); //arme supprimée des armes du joueur
-        }
+        // var index = this.armes.indexOf(arme);
+        // if(index > -1){//l'index a été trouvé
+        //     this.armes.splice(index, 1); //arme supprimée des armes du joueur
+        // }
     }
 }

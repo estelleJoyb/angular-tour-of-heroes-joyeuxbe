@@ -51,6 +51,12 @@ export class ArmesConcrete implements ArmeId {
         this.image = image;
     }
     //getters
+    GetId():string{
+        return this.id;
+    }
+    GetIdNumber():number{
+        return Number(this.id);
+    }
     GetName():string {
         return this.name;
     }

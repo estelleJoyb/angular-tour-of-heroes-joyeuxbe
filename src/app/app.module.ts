@@ -28,6 +28,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { AuthService } from "./auth.service";
+import { MoncompteComponent } from './moncompte/moncompte.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -54,7 +55,8 @@ import { AuthService } from "./auth.service";
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    MoncompteComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }, AuthService],

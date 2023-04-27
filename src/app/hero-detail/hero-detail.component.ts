@@ -16,12 +16,15 @@ import { Observable } from 'rxjs';
 export class HeroDetailComponent implements OnInit {
   textSeeWeapon: string;
   weapons: ArmesConcrete[] | undefined;
+  HeroWeapons: ArmesConcrete[] | undefined;
   heroAsync?: Observable<HeroId[]>;
   heroConcreteAsync?: Observable<HeroConcrete[]>;
   hero: HeroId[];
   heroConcrete: HeroConcrete;
   progress:number;
+  restearepartir: number;
   styleprogress: number;
+  erreur: string;
   
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +41,7 @@ export class HeroDetailComponent implements OnInit {
     this.getHeroConcreteAsync();
     this.getHeroConcrete(id);
     this.getAllWeapons();
+    this.getHeroConcreteWeapons();
   }
 
   getHero(): void {
@@ -59,6 +63,12 @@ export class HeroDetailComponent implements OnInit {
         this.RecalculProgress();
         console.log("progress getHeroConcrete : "+this.progress);
       });
+  }
+  getHeroConcreteWeapons():void{
+    this.weapons.forEach(weapon => {
+      this.armeService.getWeaponConcrete(weapon.toString())
+      .subscribe(arme => { this.HeroWeapons.push(arme);});
+    });
   }
   getHeroAsync(): void {
     this.heroAsync = this.heroService.getHeroes();
@@ -93,6 +103,7 @@ export class HeroDetailComponent implements OnInit {
     this.progress = +this.heroConcrete.getAttaque() + +this.heroConcrete.getDegats() + +this.heroConcrete.getEsquive() + +this.heroConcrete.getPv();
     
     this.styleprogress = (+this.progress * 100)/40;
+    this.restearepartir = 40 - this.progress;
     console.log("REcalcul progress -- style progress : "+this.styleprogress+"\n progress : "+this.progress);
   }
 
@@ -102,49 +113,68 @@ export class HeroDetailComponent implements OnInit {
       const dataName: Partial<HeroConcrete> = { name: this.heroConcrete.getName() };
       this.heroService.updateHero(this.heroConcrete.id, dataName);
       this.RecalculProgress();
+    }else if(this.heroConcrete == undefined){
+      this.erreur = "The hero is undefined";
+    }else{
+      this.erreur = "The total of point cannot be superior to 40";
     }
   }
 
   UpdateDegats(damage: number){
     var degatsmax = 40 - (+this.heroConcrete.getAttaque() + +this.heroConcrete.getEsquive() + +this.heroConcrete.getPv());
-    if(this.heroConcrete != undefined && damage >= 0 && damage <= degatsmax){
+    if(this.heroConcrete != undefined && damage >= 1 && damage <= degatsmax){
       console.log("updating degats");
       this.heroConcrete.setDegats(damage);
       const dataDegats: Partial<HeroConcrete> = { degats: this.heroConcrete.getDegats()};
       this.heroService.updateHero(this.heroConcrete.id, dataDegats);
       this.RecalculProgress();
+    }else if(damage < 1){
+      this.erreur = "Damage cannot be inferior to 1";
     }else{
-      console.log("not updating degats\n degats max : "+degatsmax+'\ndamage : '+damage);
+      this.erreur = "The total of point cannot be superior to 40";
     }
   }
 
   UpdateAttaque(attaque : number){
     var attaquemax = 40 - (this.progress - this.heroConcrete.getAttaque());
-    if(this.heroConcrete != undefined && attaque >= 0 && attaque <= attaquemax){
+    if(this.heroConcrete != undefined && attaque >= 1 && attaque <= attaquemax){
       this.heroConcrete.setAttaque(attaque);
       const dataAttaque: Partial<HeroConcrete> = { attaque: this.heroConcrete.getAttaque()};
       this.heroService.updateHero(this.heroConcrete.id, dataAttaque);
       this.RecalculProgress();
+    }else if(attaque < 1){
+      this.erreur = "Attack cannot be inferior to 1";
+    }else{
+      this.erreur = "The total of point cannot be superior to 40";
     }
   }
 
   UpdateEsquive(esquive : number){
     var esquivemax = 40 - (this.progress - this.heroConcrete.getEsquive());
-    if(this.heroConcrete != undefined && esquive >= 0 && esquive <= esquivemax){
+    if(this.heroConcrete != undefined && esquive >= 1 && esquive <= esquivemax){
       this.heroConcrete.setEsquive(esquive);
       const dataEsquive: Partial<HeroConcrete> = { esquive: this.heroConcrete.getEsquive()};
       this.heroService.updateHero(this.heroConcrete.id, dataEsquive);
       this.RecalculProgress();
+    }else if(esquive < 1){
+      this.erreur = "Dodge cannot be inferior to 1";
+    }else{
+      this.erreur = "The total of point cannot be superior to 40";
     }
   }
 
   Updatepv(pv : number){
     var pvmax = 40 - (this.progress - this.heroConcrete.getPv());
-    if(this.heroConcrete != undefined && pv >= 0 && pv <= pvmax){
+
+    if(this.heroConcrete != undefined && pv >= 1 && pv <= pvmax){
       this.heroConcrete.setPv(pv);
       const dataPv: Partial<HeroConcrete> = { pv: this.heroConcrete.getPv()};
       this.heroService.updateHero(this.heroConcrete.id, dataPv);
       this.RecalculProgress();
+    }else if(pv < 1){
+      this.erreur = "Hit Point cannot be inferior to 1";
+    }else {
+      this.erreur = "The total of point cannot be superior to 40";
     }
   }
 
@@ -154,15 +184,11 @@ export class HeroDetailComponent implements OnInit {
       }
       const target= event.target as HTMLInputElement;
       const files: File = (target.files as FileList)[0];
-      //const files = (event.target as HTMLInputElement).files[0]; //event.target.files;
-      
       const reader = new FileReader();
       reader.readAsDataURL(files);
       reader.onload = () => { 
         if(reader.result != null && this.hero != undefined){
           const arrayBuffer = reader.result; 
-          //const decoder = new TextDecoder('utf-8');
-          //const stringImg = decoder.decode(arrayBuffer);
           this.heroConcrete.setImage(arrayBuffer.toString());
           const dataImage: Partial<HeroConcrete> = { image: this.heroConcrete.getImage()};
           this.heroService.updateHero(this.heroConcrete.id, dataImage);
@@ -171,22 +197,15 @@ export class HeroDetailComponent implements OnInit {
       }
   }
 
-  addWeapon(id: string){
+  addWeapon(weapon : ArmesConcrete){
     console.log("ADD WEAPON !");
-    this.armeService.getWeaponConcrete(id)
-      .subscribe(weapon =>{
-        var weapon = weapon
-        if(this.heroConcrete != undefined && weapon != undefined){
-          this.heroConcrete.AddArme(weapon);
-          console.log("weapon : "+weapon);
-          console.log("ARMES : "+this.heroConcrete.armes);
-          const data: Partial<HeroConcrete> = { armes: this.heroConcrete.armes};
-          this.heroService.updateHero(this.heroConcrete.id, data);
-        }
-      });
+    this.heroConcrete.AddArme(weapon);
+    const data: Partial<HeroConcrete> = { armes: this.heroConcrete.armes};
+    this.heroService.updateHero(this.heroConcrete.id, data);
+    this.getHeroConcreteWeapons();
   }
 
-  RemoveWeapon(id: string){
+  RemoveWeapon(id: number){
 
   }
 

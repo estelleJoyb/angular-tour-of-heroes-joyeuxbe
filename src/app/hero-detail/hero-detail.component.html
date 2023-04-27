@@ -8,6 +8,13 @@
         <div class="progress">
           <div  [ngStyle]="{'width.%': styleprogress}" class="progress-bar" role="progressbar" (aria-valuenow)="progress" aria-valuemin="0" aria-valuemax="40"></div>
         </div>
+        <div class="d-flex justify-content-between">
+          <p *ngIf="restearepartir != 0">{{ restearepartir }} left to use</p>
+          <p>Total of point : {{progress}}</p>
+          
+        </div>
+        
+        <p class="mt-2 text-danger">{{erreur}}</p>
         <div class="d-flex m-2 justify-content-between">
           <div class="justify-content-between d-flex w-50">
             <label class="align-middle " style="margin-right : 15px;" for="hero-name">Name: </label>
@@ -52,16 +59,17 @@
       </div>
     </div>
     
+    
     <div *ngIf="heroConcrete.armes.length != 0" >
       <h3 class="mt-5">Weapons of {{heroConcrete.getName()}}</h3>
       <div class="weapon-menu">
-        <div class="card" style="width:22%; margin: 5px" *ngFor="let weapon of heroConcrete.armes">
-          <img class="card-img-top img-weapon" src={{weapon.image}} alt="Card image cap" width="50%">
+        <div class="card" style="width:22%; margin: 5px" *ngFor="let weapon of HeroWeapons">
+          <img class="card-img-top img-weapon" src={{weapon.GetImage()}} alt="Card image cap" width="50%">
           <div class="card-body">
-            <h5 class="card-title">{{weapon.name}}</h5>
+            <h5 class="card-title">{{weapon.GetName()}}</h5>
             <div class="d-flex justify-content-between">
-              <a routerLink="/detailweapon/{{weapon.id}}" class="small bg-dark mt-2 text-white rounded">See this Weapon</a>
-              <a (click)="RemoveWeapon(weapon.id)" class="small bg-dark mt-2 text-white rounded">Remove Weapon</a>
+              <a routerLink="/detailweapon/{{weapon.GetId()}}" class="small bg-dark mt-2 text-white rounded">See this Weapon</a>
+              <a (click)="RemoveWeapon(weapon.GetIdNumber())" class="small bg-dark mt-2 text-white rounded">Remove Weapon</a>
             </div>
           </div>
         </div>
@@ -73,16 +81,16 @@
     <div *ngIf="weapons && weapons.length >0" class="weapon-menu">
       
       <div class="card" style="width:22%; margin: 5px" *ngFor="let weapon of weapons">
-        <img class="card-img-top img-weapon" src={{weapon.image}} alt="Card image cap" width="50%">
+        <img class="card-img-top img-weapon" src={{weapon.GetImage()}} alt="Card image cap" width="50%">
         <div class="card-body">
-          <h5 class="card-title">{{weapon.name}}</h5> 
-          <a class="small bg-dark m-2 text-white rounded mx-auto w-75" (click)="addWeapon(weapon.id)">Add this Weapon to {{heroConcrete.name}}</a>
+          <h5 class="card-title">{{weapon.GetName()}}</h5> 
+          <a class="small bg-dark m-2 text-white rounded mx-auto w-75" (click)="addWeapon(weapon)">Add this Weapon to {{heroConcrete.getName()}}</a>
         </div>
       </div>
     </div>
 
     <a id="btn-weapon" (click)="SeeAllWeapons()" class="small bg-dark mt-2 text-white rounded" >{{textSeeWeapon}}</a>
-    
+
       
     
   </div>

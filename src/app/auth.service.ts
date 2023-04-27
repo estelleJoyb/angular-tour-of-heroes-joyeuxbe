@@ -36,6 +36,19 @@ export class AuthService {
       }
     });
   }
+  // GetUser(){
+  //   return this.afAuth.currentUser.then((user: firebase.User | null) => {
+  //     if(user){
+  //       const uid = user.uid;
+  //       const email = user.email;
+  //       const photoURL = user.photoURL;
+  //       const displayName = user.displayName;
+  //       return { uid, email, photoURL, displayName};
+  //     }else{
+  //       return null;
+  //     }
+  //   });
+  // }
   //sign in with email/password
   SignIn(email: string, password: string) {
     return this.afAuth

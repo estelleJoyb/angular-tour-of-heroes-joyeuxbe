@@ -15,6 +15,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 //route guard
 import { AuthGuard } from './guard/auth.guard';
+import { MoncompteComponent } from './moncompte/moncompte.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'register-user', component: SignUpComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'verify-email-adress', component: VerifyEmailComponent},
+  { path: 'moncompte', component: MoncompteComponent}
 ];
 
 @NgModule({

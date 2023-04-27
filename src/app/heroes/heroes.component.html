@@ -4,6 +4,53 @@
             <h4 class="text-center"><strong>My Heroes</strong></h4>
             <hr>
             <a class="bg-transparent border-0" routerLink="/createhero"><img src="../../assets/img/add-user.png" alt="Create a new Heroe"></a>
+            <div class="d-flex">
+                <select (click)="mostAttack()" class="form-select form-select-lg mb-3 w-25" aria-label=".form-select-lg example" name="filtre_attaque" id="filtre_attaque" [(ngModel)]="selectedvalueattackfilter">
+                    <option value="">Attack</option>
+                    <option value="1">> 1</option>
+                    <option value="5">> 5</option>
+                    <option value="10">> 10</option>
+                    <option value="15">> 15</option>
+                    <option value="20">> 20</option>
+                    <option value="25">> 25</option>
+                    <option value="30">> 30</option>
+                    <option value="35">> 35</option>
+                </select> 
+                <select (click)="mostDamage()" class="form-select form-select-lg mb-3 w-25" aria-label=".form-select-lg example" name="filtre_dommages" id="filtre_dommages" [(ngModel)]="selectedvaluedamagefilter">
+                    <option value="">Damage</option>
+                    <option value="1">> 1</option>
+                    <option value="5">> 5</option>
+                    <option value="10">> 10</option>
+                    <option value="15">> 15</option>
+                    <option value="20">> 20</option>
+                    <option value="25">> 25</option>
+                    <option value="30">> 30</option>
+                    <option value="35">> 35</option>
+                </select>
+                <select (click)="mostDodge()" class="form-select form-select-lg mb-3 w-25" aria-label=".form-select-lg example" name="filtre_defense" id="filtre_defense" [(ngModel)]="selectedvaluedodgefilter">
+                    <option value="">Dodge</option>
+                    <option value="1">> 1</option>
+                    <option value="5">> 5</option>
+                    <option value="10">> 10</option>
+                    <option value="15">> 15</option>
+                    <option value="20">> 20</option>
+                    <option value="25">> 25</option>
+                    <option value="30">> 30</option>
+                    <option value="35">> 35</option>
+                </select>
+                <select (click)="mostPv()" class="form-select form-select-lg mb-3 w-25" aria-label=".form-select-lg example" name="filtre_apv" id="filtre_pv" [(ngModel)]="selectedvaluepvfilter">
+                    <option value="">Hit Point</option>
+                    <option value="1">> 1</option>
+                    <option value="5">> 5</option>
+                    <option value="10">> 10</option>
+                    <option value="15">> 15</option>
+                    <option value="20">> 20</option>
+                    <option value="25">> 25</option>
+                    <option value="30">> 30</option>
+                    <option value="35">> 35</option>
+                </select>
+            </div>
+            
             <div class="d-flex flex-wrap">
                 <div class="profile-card-4 text-center" *ngFor="let heroe of heroesConcrete"><img src={{heroe.image}} class="img img-responsive">
                     <div class="profile-content">
